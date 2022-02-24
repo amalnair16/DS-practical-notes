@@ -1,0 +1,65 @@
+#include<stdio.h>
+#include<conio.h>
+#include<ctype.h>
+void push(int);
+int pop();
+void eval(char[],int[]);
+int top=-1,st[20];
+void push(int n)
+{
+top++;
+st[top]=n;
+}
+int pop()
+{
+int t=0;
+t=st[top];
+top--;
+return(t);
+}
+void eval(char pos[],int value[])
+{
+int i=0,op1,op2,res;
+char ch;
+while(pos[i]!='\0')
+{
+ch=pos[i];
+if(isalpha(ch))
+{
+push(value[i]);
+}
+else
+{
+op2=pop();
+op1=pop();
+switch(ch)
+{
+case '+': push(op1+op2);break;
+case '-':push(op1-op2);break;
+case '*':push(op1*op2);break;
+case '/':push(op1/op2);break;
+}
+}
+i++;
+}
+res=pop();
+printf("Value of expression= %d",res);
+}
+void main()
+{
+int i, value[20];
+char pos[20];
+clrscr();
+printf("Enter the postfix expression: ");
+gets(pos);
+for(i=0;pos[i]!=NULL;i++)
+{
+if(isalpha(pos[i]))
+{
+printf("Enter the value for %c ",pos[i]);
+scanf("%d",&value[i]);
+}
+}
+eval(pos,value);
+getch();
+}
