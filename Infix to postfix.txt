@@ -1,0 +1,82 @@
+#include<stdio.h>
+#include<conio.h>
+void push(char);
+char pop();
+int pri(char);
+void intopos(char[]);
+int top=-1,loc=0;
+char st[40],pos[20],temp,l,inf[30];
+void main()
+{ clrscr();
+printf("Enter the infix expression: ");
+gets(inf);
+intopos(inf);
+getch();
+}
+void push(char c)
+{ top++;
+st[top]=c;
+}
+char pop()
+{ char t;
+t=st[top];
+top--;
+return(t);
+}
+int pri(char c)
+{
+switch(c)
+{
+case '^': return 5;
+case '*':
+case '/': return 4;
+case '+':
+case '-': return 3;
+case '(':
+case ')':return 2;
+case '#':return 1;
+default : return 0;
+}
+}
+void intopos(char inf[])
+{
+int i=0;
+push('$');
+while(inf[i]!='\0')
+{
+l=inf[i];
+switch(l)
+{
+case '(': push(l); break;
+case ')': temp=pop();
+while(temp!='(')
+{
+pos[loc]=temp;
+loc++;
+temp=pop();
+}
+break;
+case '*':
+case '/':
+case '+':
+case '-':
+case '^':
+while(pri(l)<pri(st[top]))
+{ temp=pop();
+pos[loc]=temp;
+loc++;
+}
+push(l); break;
+default: pos[loc]=l;
+loc++;
+}
+i++;
+}
+while(top>0)
+{ temp=pop();
+pos[loc]=temp;
+loc++;
+}
+pos[loc]='\0';
+printf("postfix expression=%s ",pos);
+}
