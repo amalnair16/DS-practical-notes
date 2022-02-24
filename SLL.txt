@@ -1,0 +1,221 @@
+#include<stdio.h>
+#include<conio.h>
+struct node
+{
+int data;
+struct node *next;
+};
+struct node *head=NULL,*tail=NULL,*temp,*k,*loc;
+void create();
+void display();
+void ins_begin();
+void ins_sp();
+void ins_end();
+void del_head();
+void del_sp();
+void del_end();
+void search();
+void sort();
+void create()
+{
+int b;
+printf("Enter -1 termination:");
+scanf("%d",&b);
+while(b!=-1)
+{
+if(head==NULL)
+{
+head=(struct node*)malloc(sizeof(struct node));
+head->data=b;
+head->next=NULL;
+tail=head;
+}
+else
+{ temp=(struct node*)malloc(sizeof(struct node));
+temp->data=b;
+tail->next=temp;
+temp->next=NULL;
+tail=temp;
+}
+printf("Enter the next data: ");
+scanf("%d",&b);
+}
+}
+void display()
+{
+temp=head;
+while(temp!=NULL)
+{
+printf("%d->",temp->data);
+temp=temp->next;
+}
+printf("NULL");
+}
+void ins_begin()
+{
+int b;
+printf("Enter the data: ");
+scanf("%d",&b);
+temp=(struct node*)malloc(sizeof(struct node));
+temp->data=b;
+temp->next=head;
+head=temp;
+}
+void ins_sp()
+{
+int b,i,n;
+printf("Enter the data to be inserted: ");
+scanf("%d",&b);
+printf("Enter the position: ");
+scanf("%d",&n);
+temp=head;
+for(i=1;i<n-1;i++)
+{
+temp=temp->next;
+}
+k=(struct node*)malloc(sizeof(struct node));
+k->data=b;
+k->next=temp->next;
+temp->next=k;
+}
+void ins_end()
+{
+int b;
+printf("Enter the data: ");
+scanf("%d",&b);
+temp=(struct node*) malloc(sizeof(struct node));
+temp->data=b;
+tail->next=temp;
+temp->next=NULL;
+tail=temp;
+}
+void del_head()
+{
+temp=head;
+head=head->next;
+free(temp);
+}
+void del_sp()
+{
+int i,n;
+printf("Enter the position of the node to be deleted:");
+scanf("%d",&n);
+temp=head;
+for(i=1;i<n-1;i++)
+temp=temp->next;
+k=(struct node*)malloc(sizeof(struct node));
+k=temp->next;
+temp->next=k->next;
+free(k);
+}
+void del_end()
+{
+if(head->next==NULL)
+{
+temp=head;
+head=NULL;
+free(temp);
+}
+else
+{
+loc=head;
+temp=head->next;
+while(temp->next!=NULL)
+{
+loc=temp;
+temp=temp->next;
+}
+loc->next=NULL;
+free(temp);
+}
+}
+void search()
+{
+int b,f;
+printf("Enter the data to be searched: ");
+scanf("%d",&b);
+temp=head;
+while(temp!=NULL)
+{
+if(temp->data==b)
+{
+f=1;
+break;
+}
+else
+{
+f=0;
+temp=temp->next;
+}
+}
+if(f==1)
+printf("The element is found.\n");
+else
+printf("The element is not found.\n");
+}
+void sort()
+{
+struct node *p,*q;
+int a,b;
+for(p=head;p!=NULL;p=p->next)
+{
+for(q=p->next;q!=NULL;q=q->next)
+{
+if(p->data > q->data)
+{
+a=p->data;
+b=q->data;
+p->data=b;
+q->data=a;
+}
+}
+}
+}
+void main()
+{
+int ch;
+clrscr();
+printf("\t\t MENU\n");
+printf("1.Create the list\n");
+printf("2.Display the list\n");
+printf("3.Insert at the beginning\n");
+printf("4.Insert at specified location\n");
+printf("5.Insert at the end\n");
+printf("6.Delete the head\n");
+printf("7.Delete the specified node\n");
+printf("8.Delete the tail\n");
+printf("9.Search an element\n");
+printf("10.Sort the list\n");
+printf("Enter your choice: ");
+scanf("%d",&ch);
+do{
+switch(ch)
+{
+case 1: printf("Create the list\n");
+create(); display(); break;
+case 2: printf("Display the list\n");
+display(); break;
+case 3: printf("Insert at the beginning\n");
+ins_begin(); display(); break;
+case 4: printf("Insert at specified location\n");
+ins_sp(); display(); break;
+case 5: printf("Insert at the end\n");
+ins_end(); display(); break;
+case 6: printf("Delete the head\n");
+del_head(); display(); break;
+case 7: printf("Delete the specified node\n");
+del_sp(); display(); break;
+case 8: printf("Delete the tail\n");
+del_end(); display(); break;
+case 9: printf("Search an element\n");
+search(); break;
+case 10:printf("Sort the list\n");
+sort(); display(); break;
+default:
+printf("Wrong choice\n");
+}
+printf("\nEnter your choice: ");
+scanf("%d",&ch);
+}while(ch<11);
+getch();
+}
