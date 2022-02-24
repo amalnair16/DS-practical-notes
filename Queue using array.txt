@@ -1,0 +1,61 @@
+#include<stdio.h>
+#include<conio.h>
+#include<process.h>
+int rear=0,front=0,a[10];
+void insert();
+void delet();
+void display();
+void insert()
+{
+int item;
+printf("Enter the element: ");
+scanf("%d",&item);
+a[rear]=item;
+rear++;
+}
+void delet()
+{ int item;
+if(front==rear)
+{ printf("Queue is empty.");
+return;
+}
+else
+{ item=a[front++];
+printf("The deleted element is %d",item);
+}
+}
+void display()
+{ int i;
+if(front==rear)
+{
+printf("Queue is empty.");
+return;
+}
+else {
+printf("The queue elements are: ");
+for(i=front;i<rear;i++)
+printf("%d ",a[i]);
+}
+}
+void main()
+{
+int ch;
+clrscr();
+printf(" \tMENU\n");
+printf("1.Insertion\n2.Deletion\n3.Display\n4.Exit\n");
+printf("Enter your choice: ");
+scanf("%d",&ch);
+do{
+switch(ch)
+{
+case 1: insert(); break;
+case 2: delet(); break;
+case 3: display(); break;
+case 4: exit(0); break;
+default:printf("Invalid choice.\n");
+}
+printf("\nEnter your choice: ");
+scanf("%d",&ch);
+}while(ch<5);
+getch();
+}
